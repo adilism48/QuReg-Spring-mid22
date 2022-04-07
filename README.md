@@ -1,2 +1,2 @@
-# QuReg-Spring-mid22
+# mid22
 mid22

@@ -1,0 +1,85 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <title>QuRegWeb</title>
+</head>
+<body>
+    <nav class="navbar fixed-static-top navbar-expand-lg nav_style">
+        <div class="container">
+            <div class="navbar-brand" href="#">
+                <img src="../static/img/Logo.png" th:src="@{/img/Logo.png}" width="40" height="40" class="img-fluid d-inline-block align-text-center" alt="logo" >
+                QuRegWeb
+            </div>
+        </div>
+    </nav>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-sm-12 align-self-center form-back">
+                    <form class="row g-3" method="post">
+                        <h1 class="text-center">QuRegWeb</h1>
+                        <div class="col-md-6">
+                            <label for="inputName" class="form-label">Firstname</label>
+                            <input type="text" class="form-control" id="inputName" name="name" onkeyup="chkFields()">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputSurname" class="form-label">Surname</label>
+                            <input type="text" class="form-control" id="inputSurname" name="surname" onkeyup="chkFields()">
+                        </div>
+                        <div class="col-12">
+                            <label for="inputCardID" class="form-label">CardID</label>
+                            <input type="text" class="form-control" id="inputCardID" name="cardID" onkeyup="chkFields()">
+                        </div>
+                        <div class="row justify-content-center row g-3">
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-outline-dark" id="regBtn" name="regBtn" disabled>Register</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <table class="table table-striped">
+                <thead class="table_head_style">
+                    <tr>
+                        <th scope="col">CardID</th>
+                        <th scope="col">Firstname</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col">Action</th>
+                    </tr>
+
+                    <div th:each="element : ${people}">
+                        <tr class="table_body_style">
+                            <td th:text="${element.card_id}" style="color: var(--color1)"></td>
+                            <td th:text="${element.firstname}" style="color: var(--color1)"></td>
+                            <td th:text="${element.surname}" style="color: var(--color1)"></td>
+                            <td>
+                                <form th:action="'/del/' + ${element.id}" method="post">
+                                    <button class="btn btn-outline-dark btn-delete" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </div>
+                </thead>
+            </table>
+        </div>
+    </section>
+
+    <footer>
+        <h6 class="text-center">QuRegWeb 2022 Spring edition</h6>
+    </footer>
+    <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+
+</body>
+</html>
