@@ -2,7 +2,6 @@ package com.mid.qureg.controllers;
 
 import com.mid.qureg.interfaces.PeopleInterface;
 import com.mid.qureg.models.People;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MainController {
 
-    @Autowired
-    private PeopleInterface peopleInterface;
+    private final PeopleInterface peopleInterface;
+
+    public MainController(PeopleInterface peopleInterface) {
+        this.peopleInterface = peopleInterface;
+    }
 
     @GetMapping("/")
     public String main(Model model) {
@@ -33,7 +35,7 @@ public class MainController {
     }
 
     @PostMapping("/del/{id}")
-    public String mainPostDelete(@PathVariable(value = "id") long id, Model model) {
+    public String mainPostDelete(@PathVariable(value = "id") Long id, Model model) {
         People people = peopleInterface.findById(id).orElseThrow();
         peopleInterface.delete(people);
         return "redirect:/";

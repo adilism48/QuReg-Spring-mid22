@@ -14,7 +14,6 @@ public class People {
 
     private String card_id, firstname, surname;
 
-
     public Long getId() {
         return id;
     }
