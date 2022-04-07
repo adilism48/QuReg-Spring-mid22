@@ -2,12 +2,10 @@ package com.mid.qureg.controllers;
 
 import com.mid.qureg.interfaces.PeopleInterface;
 import com.mid.qureg.models.People;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -35,9 +33,16 @@ public class MainController {
     }
 
     @PostMapping("/del/{id}")
-    public String mainPostDelete(@PathVariable(value = "id") Long id, Model model) {
-        People people = peopleInterface.findById(id).orElseThrow();
+    public String mainPostDelete(@PathVariable(value = "id") long id, Model model) {
+        People people = peopleInterface.findById(id).orElseThrow(() -> new PeopleDoesNotExistException(id));
         peopleInterface.delete(people);
         return "redirect:/";
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT) // 409
+    class PeopleDoesNotExistException extends RuntimeException{
+        public PeopleDoesNotExistException(long id){
+            super("People " + id + " does not exist.");
+        }
     }
 }
